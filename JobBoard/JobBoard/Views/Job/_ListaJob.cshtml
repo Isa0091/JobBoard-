@@ -1,0 +1,39 @@
+﻿@model JobBoard.Models.Job.Output.ListaJobOutputViewModel
+@{
+    Layout = null;
+    Func<int, string> urlPaginacion = pag => Url.Action("Index", "Job", new
+    {
+        Page = pag,
+        @FiltroTitulo = Model.Filtros.FiltroTitulo,
+        @FechaExpiracionInicio = Model.Filtros.FechaExpiracionInicio,
+        @FechaExpiracionFin = Model.Filtros.FechaExpiracionFin
+    });
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Fecha de expiracion</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (JobBoard.Core.Model.Job job in Model.ListadoJob)
+            {
+                <tr>
+                    <td>@job.Titulo</td>
+                    <td>@job.FechaExpiracion.ToString("dd/MM/yyyy")</td>
+                    <td> <a class="btn btn-sm btn-default btn-outline eliminarJoc" data-codigo="@job.Codigo" asp-action="EliminarJob" asp-controller="Job">Eliminar</a></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="mb-md-4 py-5" style="text-align:center;">
+        <input type="hidden" value="@Model.PagingInfo.CurrentPage" id="paginaactual" />
+        @await Component.InvokeAsync("Paginacion", new { pagingInfo = Model.PagingInfo, pageUrl = urlPaginacion })
+    </div>
+</div>

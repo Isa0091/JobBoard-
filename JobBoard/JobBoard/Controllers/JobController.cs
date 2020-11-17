@@ -47,7 +47,7 @@ namespace JobBoard.Controllers
                string.IsNullOrEmpty(filtros.FechaExpiracionInicio) ? DateTimeOffset.Now.AddMonths(-3) : Convert.ToDateTime(filtros.FechaExpiracionInicio);
 
             filtros.FechaExpiracionFin = fechaFin.ToString("dd/MM/yyyy");
-            filtros.FechaExpiracionFin = fechaFin.ToString("dd/MM/yyyy");
+            filtros.FechaExpiracionInicio = fechaInicio.ToString("dd/MM/yyyy");
 
             FiltrosJobInputDto filtrosJobInputDto = new FiltrosJobInputDto()
             {
