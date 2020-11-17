@@ -1,48 +1,160 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JobBoard</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digicel-Roaming - @ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
+
+    <link rel="stylesheet" href="~/css/plugins/slick/slick.css" />
+    <link rel="stylesheet" href="~/css/plugins/slick/slick-theme.css" />
+    <link rel="stylesheet" href="~/css/plugins/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/plugins/fancybox/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="~/css/icons/styles.css" />
+    <link rel="stylesheet" href="~/css/plugins/sweetalert/sweetalert2.css" />
+    <link rel="stylesheet" href="~/css/plugins/datapicker/datepicker.css" />
+    <link rel="stylesheet" href="~/css/plugins/nestable/nestable.css" />
+    <link rel="stylesheet" href="~/css/plugins/multiselect/bootstrap-multiselect.css" />
+    <link rel="stylesheet" href="~/css/toastr/toastr.min.css" />
+    <link href="~/css/plugins/iCheck/custom.css" rel="stylesheet" />
+    <link href="~/css/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/css/plugins/jsonViewer/jjsonviewer.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/plugins/Datatable/dataTables.bootstrap4.min.css" />
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">JobBoard</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <div id="wrapper">
+
+        <!-- Contenedor Principal Izquierdo -->
+        <nav class="navbar-default navbar-static-side">
+            <div class="sidebar-collapse">
+
+                <ul class="nav metismenu" id="side-menu">
+
+                    <!-- Logo + Titulo del Sistema -->
+                    <li class="nav-header">
+                        <div class="profile-element">
+
+                            <!-- Logo cuando el panel esta completo -->
+                            <div class="logo">
+                                <a asp-controller="Home">
+                                    <img src="~/img/logo.png" />
+                                </a>
+                            </div>
+                          
+                        </div>
+
+                        <!-- Logo cuando el panel esta minimizado -->
+                        <div class="logo-element">
+                            <a asp-controller="Home"><img src="~/img/logo-icon.png" style="height:40px;" /></a>
+                        </div>
+                    </li>
+
+                    <!-- Menú Principal / Lista de items -->
+                    <!-- Para mostrar el item del menú activo, solo es necesario agregar la clase active al li -->
+                    <!-- Para mostrar un submenu es recomendable mostrar un icono de flecha a la derecha, por lo que se agrega un tag <span class="fa arrow"></span> dentro del tag <a> -->
+                    <!-- Para mostrar un icono al lado del texto, es necesario usar el tag <i> seguido de la clase fa + la clase del icono a mostrar.
+                    Estos iconos son vectores, la cual son sacados de la tipografia Font Awsome - https://fortawesome.github.io/Font-Awesome/icons/ -->
+
+                    <li class="" seg-accion="Index" seg-controller="job" title="Listado de job">
+                        <a asp-controller="Job" asp-action="Index">
+                            <i class="fa fa-list"></i><span class="nav-label">Listado de job</span>
+                        </a>
+                    </li>
+
+     
+
+
+                </ul>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+        <!-- Contenedor Principal - Navegacion superior, Header titulos, Contenido, Footer -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- Navegación superior -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+                    <!-- Botón para minimizar panel izquierdo + Barra de búsqueda -->
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <!-- -->
+                    <!-- Lista de items -->
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">
+
+                            </span>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> <i class="fa fa-bars"></i>  </a>
+                            <ul class="dropdown-menu">
+                          
+                            </ul>
+                        </li>
+                      
+                    </ul>
+                    <!-- -->
+
+                </nav>
+            </div>
+            <!-- -->
+            <!-- Contenido de la views-->
             @RenderBody()
-        </main>
+            <!-- -->
+            <!-- Footer -->
+            <div class="footer">
+                <div class="pull-right">
+                    job &copy; @DateTime.Now.Year
+                </div>
+                <div>
+                    <strong>Job</strong>
+                </div>
+            </div>
+            <!-- -->
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - JobBoard - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/inspinia.js"></script>
+
+    <script src="~/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/js/plugins/slick/slick.min.js"></script>
+    <script src="~/js/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/js/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <script src="~/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+
+    <script src="~/js/plugins/sweetalert/sweetalert2.js"></script>
+    <script src="~/js/plugins/nestable/jquery.nestable.js"></script>
+
+    <script src="~/js/main.js"></script>
+    <script src="~/js/CustomLibrerias/jquery.history.js"></script>
+    <script src="~/js/CustomLibrerias/BitworksAjaxNavigation.js"></script>
+    <script src="~/js/ventanas/ventanas.js"></script>
+    <script src="~/js/CustomLibrerias/customBitworks.js"></script>
+    <script src="~/js/toastr/toastr.js"></script>
+    <script src="~/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/js/plugins/nestable/jquery.nestable.js"></script>
+    <script src="~/js/plugins/select2/select2.full.min.js"></script>
+    <script src="~/js/plugins/jsonViewer/jjsonviewer.js"></script>
+    <script src="~/js/plugins/multiselect/bootstrap-multiselect.js"></script>
+    <script src="~/js/plugins/dateformat/jquery-dateformat.min.js"></script>
+    <script src="~/js/plugins/Datatable/dataTables.min.js"></script>
+    <script src="~/js/plugins/Datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/plugins/Datatable/datatablecondicion.js"></script>
+
+    @RenderSection("scripts", required: false)
+
 </body>
 </html>

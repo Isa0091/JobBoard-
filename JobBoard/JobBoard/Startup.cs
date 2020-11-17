@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobBoard.Core.Data;
+using JobBoard.Core.Service;
+using JobBoard.Service;
 using JobBoard.SQL;
+using JobBoard.SQL.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +34,13 @@ namespace JobBoard
                 options.UseSqlServer(connection);
 
             });
+
+            //Repositories
+            services.AddScoped<IJobRepoitory, JobRepository>();
+
+            //Services
+            services.AddScoped<IJobService, JobService>();
+
             services.AddControllersWithViews();
         }
 
