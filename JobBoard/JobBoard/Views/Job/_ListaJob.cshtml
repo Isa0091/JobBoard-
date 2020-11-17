@@ -23,12 +23,14 @@
         <tbody>
             @foreach (JobBoard.Core.Model.Job job in Model.ListadoJob)
             {
-                <tr>
-                    <td>@job.Titulo</td>
-                    <td>@job.FechaExpiracion.ToString("dd/MM/yyyy")</td>
-                    <td> <a class="btn btn-sm btn-default btn-outline eliminarJoc" data-codigo="@job.Codigo" asp-action="EliminarJob" asp-controller="Job">Eliminar</a></td>
+            <tr>
+                <td>@job.Titulo</td>
+                <td>@job.FechaExpiracion.ToString("dd/MM/yyyy")</td>
+                <td> <a class="btn btn-white getjob" data-codigo="@job.Codigo" asp-action="GetJob" asp-controller="Job"><i class="fa fa-pencil"></i> Editar</a></td>
 
-                </tr>
+                <td> <a class="btn btn-white eliminarJob" data-codigo="@job.Codigo" asp-action="EliminarJob" asp-controller="Job"><i class="fa fa-trash"></i> Eliminar</a></td>
+
+            </tr>
             }
         </tbody>
     </table>

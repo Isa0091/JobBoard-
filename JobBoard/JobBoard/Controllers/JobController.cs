@@ -37,7 +37,7 @@ namespace JobBoard.Controllers
         {
             JobInputViewModel jobInputViewmodel = new JobInputViewModel();
 
-            if (codigo == null)
+            if (codigo != null)
             {
                 JobBoard.Core.Model.Job Job = await _jobService.GetJob(codigo.Value);
                 jobInputViewmodel = new JobInputViewModel()

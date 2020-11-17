@@ -56,8 +56,8 @@
                 </fieldset>
 
                 <div class="form-group">
-                    <div >
-                        <a class="btn btn-primary" href="@Url.Action("NuevoJob","Job")" id="nuevo-joc">Nuevo</a>
+                    <div>
+                        <a class="btn btn-primary getjob" data-codigo=""  href="@Url.Action("GetJob","Job")" >Nuevo</a>
                     </div>
                 </div>
                 <br />
@@ -69,3 +69,139 @@
         </div>
     </div>
 </div>
+
+<div class="modal inmodal fade" id="modal-detalle" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" id="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                <h4 class="modal-title">Detalle de job</h4>
+            </div>
+            <div class="modal-body">
+                <div id="formjob">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('click', ".getjob", function (e) {
+
+            Bitworks.Ventanas.mostrarLoading();
+            var codigo = $(this).data('codigo');
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'GET',
+                data: { codigo: codigo},
+                success: function (result) {
+                    if (result.existoso) {
+                        $("#formjob").html('');
+                        $("#formjob").html(result.html);
+                        $.validator.unobtrusive.parse("#frmguardarjob");
+                        RefreshInputDate();
+                        Bitworks.Ventanas.ocultarLoading();
+                        $("#modal-detalle").modal();
+
+                    } else {
+                        swal("Error", "'Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
+                }
+            });
+
+        });
+
+            $(document).on('submit', '#frmguardarjob', function (e) {
+
+            Bitworks.Ventanas.mostrarLoading();
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize() +"&"+ $("#frm-filtros").serialize() + "&page=" + $("#paginaactual").val(),
+                success: function (result) {
+                    if (result.existoso) {
+                        $("#modal-detalle").modal("hide");
+                        $("#ListadoJobs").html('');
+                        $("#ListadoJobs").html(result.html);
+                        swal("Exito", "job guardado correctamente", "success");
+                    } else {
+                        $("#formjob").html('');
+                        $("#formjob").html(result.html);
+                        $.validator.unobtrusive.parse("#frmguardarjob");
+                        RefreshInputDate();
+                        Bitworks.Ventanas.ocultarLoading();
+                    }
+                },
+                error: function (error) {
+                    swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
+                }
+            });
+      });
+
+            $(document).on('click', ".eliminarJob", function (e) {
+
+                e.preventDefault();
+                var $this = $(this);
+                var codigo = $this.data("codigo");
+
+                swal({
+                    title: "¿Desea eliminar el job?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "si, eliminarlo",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        Bitworks.Ventanas.mostrarLoading();
+                        $.ajax({
+                            url: $this.attr('href'),
+                            type: 'POST',
+                            data: $("#frm-filtros").serialize() + "&idJob=" + codigo,
+                            success: function (result) {
+                                if (result.existoso) {
+                                    $("#ListadoJobs").html('');
+                                    $("#ListadoJobs").html(result.html);
+                                    swal("Exito", "Job eliminado correctamente", "success");
+
+                                } else {
+                                    swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
+                                }
+                            },
+                            error: function (error) {
+                                swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
+                            }
+                        });
+                    }
+                });
+
+        });
+
+            function RefreshInputDate(){
+                $('.input-group.date').datepicker({
+                    format: 'dd/mm/yyyy',
+                    todayBtn: "linked",
+                    keyboardNavigation: false,
+                    forceParse: false,
+                    calendarWeeks: true,
+                    autoclose: true,
+                    constrainInput: false
+                });
+                $('.input-group.date input').attr('readonly', true);
+        }
+ })
+    </script>
+}

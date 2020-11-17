@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JobBoard.Models.Job.CustomValidation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace JobBoard.Models.Job.Input
         /// Fecha de expiracion del trabajo
         /// </summary>
         [Required(ErrorMessage = "La fecha de expiracion es requerido")]
+        [ValidateFechaExpiracionAttribute]
         public string FechaExpiracionJob { get; set; }
     }
 }

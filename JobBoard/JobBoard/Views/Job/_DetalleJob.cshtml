@@ -26,7 +26,7 @@
             </div>
             <div class="form-group col-md-12" style="margin-bottom:5px!important">
                 <label asp-for="Descripcion">Descripcion</label>
-                <input asp-for="Descripcion" class="form-control" />
+                <textarea asp-for="Descripcion" class="form-control" rows="5" cols="4">@Descripcion</textarea>
                 <span asp-validation-for="Descripcion" class="text-danger small form-text"></span>
             </div>
         </div>
