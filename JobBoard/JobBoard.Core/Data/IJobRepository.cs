@@ -1,4 +1,6 @@
-﻿using JobBoard.Core.Model;
+﻿using JobBoard.Core.DTO;
+using JobBoard.Core.DTO.Job.Input;
+using JobBoard.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,5 +29,15 @@ namespace JobBoard.Core.Data
         /// </summary>
         /// <param name="job"></param>
         void Eliminar(Job job);
+
+        /// <summary>
+        /// Listado paginado para la entidad Job
+        /// </summary>
+        /// <param name="filtrosJobInput"></param>
+        /// <param name="cantidadPorPagina"></param>
+        /// <param name="paginaActual"></param>
+        /// <returns></returns>
+
+        Task<ResultadoPaginadoDTO<Job>> ListadoPaginadoJobAsync(FiltrosJobInputDto filtrosJobInput, int cantidadPorPagina = 20, int paginaActual = 1);
     }
 }
