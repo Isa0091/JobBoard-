@@ -68,7 +68,17 @@ namespace JobBoard.Service
             return await _jobRepository.GetListadoAsync();
         }
 
-        public async Task<ResultadoPaginadoDTO<Job>> ListadoPaginadoJobAsync(FiltrosJobInputDto filtrosJobInput, int cantidadPorPagina = 20, int paginaActual = 1)
+        public async Task<Job> GetJob(Guid idJob)
+        {
+            Job job = await _jobRepository.GetByIdAsync(idJob);
+
+            if (job == null)
+                throw new JobException(JobException.TipoErrorJob.NoExiste, "El job al que desea acceder no existe");
+
+            return job;
+        }
+
+            public async Task<ResultadoPaginadoDTO<Job>> ListadoPaginadoJobAsync(FiltrosJobInputDto filtrosJobInput, int cantidadPorPagina = 20, int paginaActual = 1)
         {
             ResultadoPaginadoDTO<Job> resultadoPaginado = await _jobRepository.ListadoPaginadoJobAsync(filtrosJobInput, cantidadPorPagina, paginaActual);
 

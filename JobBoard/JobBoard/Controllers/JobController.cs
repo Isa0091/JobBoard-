@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JobBoard.Core.DTO;
 using JobBoard.Core.DTO.Job.Input;
 using JobBoard.Core.Service;
+using JobBoard.Extensions;
 using JobBoard.Models.Job.Input;
 using JobBoard.Models.Job.Output;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,29 @@ namespace JobBoard.Controllers
             if (filtros == null)
                 filtros = new FiltrosJobInputViewModel();
 
-            ListaJobOutputViewModel  listaJobOutputViewModel = await GetJobsVM(filtros, page);
+            ListaJobOutputViewModel listaJobOutputViewModel = await GetJobsVM(filtros, page);
             return View(listaJobOutputViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetJob(Guid? codigo)
+        {
+            JobInputViewModel jobInputViewmodel = new JobInputViewModel();
+
+            if (codigo == null)
+            {
+                JobBoard.Core.Model.Job Job = await _jobService.GetJob(codigo.Value);
+                jobInputViewmodel = new JobInputViewModel()
+                {
+                    Codigo = Job.Codigo,
+                    Descripcion = Job.Descripcion,
+                    Titulo = Job.Titulo,
+                    FechaExpiracionJob = Job.FechaExpiracion.ToString("dd/MM/yyyy")
+                };
+            }
+
+            string html = await this.RenderViewAsync("_DetalleJob", jobInputViewmodel);
+            return Json(new { existoso = true, html = html });
         }
 
 
@@ -51,16 +73,16 @@ namespace JobBoard.Controllers
 
             FiltrosJobInputDto filtrosJobInputDto = new FiltrosJobInputDto()
             {
-                 FechaExpiracionFin= fechaFin,
-                 FechaExpiracionInicio= fechaInicio,
-                 Titulo= filtros.FiltroTitulo
+                FechaExpiracionFin = fechaFin,
+                FechaExpiracionInicio = fechaInicio,
+                Titulo = filtros.FiltroTitulo
             };
 
             ResultadoPaginadoDTO<JobBoard.Core.Model.Job> resultado =
                 await _jobService.ListadoPaginadoJobAsync(filtrosJobInputDto, _cantidadPorPagina, page);
 
 
-            ListaJobOutputViewModel listadoJobVm= new ListaJobOutputViewModel()
+            ListaJobOutputViewModel listadoJobVm = new ListaJobOutputViewModel()
             {
                 Filtros = filtros,
                 ListadoJob = resultado.Resultado,

@@ -47,5 +47,12 @@ namespace JobBoard.Core.Service
         /// <param name="paginaActual"></param>
         /// <returns></returns>
         Task<ResultadoPaginadoDTO<Job>> ListadoPaginadoJobAsync(FiltrosJobInputDto filtrosJobInput, int cantidadPorPagina = 20, int paginaActual = 1);
+
+        /// <summary>
+        /// Obtengo un Job por su identiicador
+        /// </summary>
+        /// <param name="idJob"></param>
+        /// <returns></returns>
+        Task<Job> GetJob(Guid idJob);
     }
 }
