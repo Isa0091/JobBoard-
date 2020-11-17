@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace JobBoard.SQL.Repo
 {
-    public class JobRepository : RepoBase<Job>, IJobRepoitory
+    public class JobRepository : RepoBase<Job>, IJobRepository
     {
 
         public JobRepository(JobBoardContext context) : base(context)

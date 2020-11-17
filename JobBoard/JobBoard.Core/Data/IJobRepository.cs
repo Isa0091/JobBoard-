@@ -11,7 +11,7 @@ namespace JobBoard.Core.Data
     /// <summary>
     /// Maneja el acceso a datos de la tabla job
     /// </summary>
-    public interface IJobRepoitory : IRepoBase<Job>
+    public interface IJobRepository : IRepoBase<Job>
     {
         /// <summary>
         /// Obtengo un trabajo por su identificador

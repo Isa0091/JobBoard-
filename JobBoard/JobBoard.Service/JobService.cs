@@ -13,9 +13,9 @@ namespace JobBoard.Service
 {
     public class JobService : IJobService
     {
-        private readonly IJobRepoitory _jobRepository;
+        private readonly IJobRepository _jobRepository;
 
-        public JobService(IJobRepoitory jobRepository)
+        public JobService(IJobRepository jobRepository)
         {
             _jobRepository = jobRepository;
         }

@@ -36,7 +36,7 @@ namespace JobBoard
             });
 
             //Repositories
-            services.AddScoped<IJobRepoitory, JobRepository>();
+            services.AddScoped<IJobRepository, JobRepository>();
 
             //Services
             services.AddScoped<IJobService, JobService>();
