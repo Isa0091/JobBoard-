@@ -53,6 +53,48 @@ namespace JobBoard.Controllers
             return Json(new { existoso = true, html = html });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GuardarJob(JobInputViewModel jobInputViewModel, FiltrosJobInputViewModel filtros, int page)
+        {
+            if (!ModelState.IsValid)
+            {
+                string htmlDocumento = await this.RenderViewAsync("_DetalleJob", jobInputViewModel);
+                return Json(new { existoso = false, html = htmlDocumento });
+            }
+
+            if (jobInputViewModel.Codigo == null)
+                await _jobService.AddNewJob(new NewJobInputDto()
+                {
+                    Descripcion = jobInputViewModel.Descripcion,
+                    Titulo = jobInputViewModel.Titulo,
+                    FechaExpiracion = Convert.ToDateTime(jobInputViewModel.FechaExpiracionJob)
+                });
+
+            if (jobInputViewModel.Codigo != null)
+                await _jobService.Editjob(new EditJobInputDto()
+                {
+                    Codigo = jobInputViewModel.Codigo.Value,
+                    Descripcion = jobInputViewModel.Descripcion,
+                    Titulo = jobInputViewModel.Titulo,
+                    FechaExpiracion = Convert.ToDateTime(jobInputViewModel.FechaExpiracionJob)
+                });
+
+            ListaJobOutputViewModel listaJobOutputViewModel = await GetJobsVM(filtros, page);
+            string html = await this.RenderViewAsync("_ListaJob", listaJobOutputViewModel);
+            return Json(new { existoso = true, html = html });
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarJob(Guid idJob, FiltrosJobInputViewModel filtros)
+        {
+            await _jobService.DeleteJob(idJob);
+            ListaJobOutputViewModel listaJobOutputViewModel = await GetJobsVM(filtros, 1);
+            string html = await this.RenderViewAsync("_ListaJob", listaJobOutputViewModel);
+            return Json(new { existoso = true, html = html });
+        }
+
 
         /// <summary>
         /// Crea un viewmodel el cual contiene todos los datos necesarios para mostrar en la vista
