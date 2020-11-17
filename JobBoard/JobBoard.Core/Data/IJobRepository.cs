@@ -22,5 +22,10 @@ namespace JobBoard.Core.Data
         /// </summary>
         /// <returns></returns>
         Task<List<Job>> GetListadoAsync();
+        /// <summary>
+        /// Elimina u ntrabaj ode la base de datos
+        /// </summary>
+        /// <param name="job"></param>
+        void Eliminar(Job job);
     }
 }
