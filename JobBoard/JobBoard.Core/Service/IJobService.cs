@@ -22,14 +22,20 @@ namespace JobBoard.Core.Service
         /// <summary>
         /// Edita los datos de un job
         /// </summary>
-        /// <param name="newJobInputDto"></param>
+        /// <param name="editJobInputDto"></param>
         /// <returns></returns>
-        Task<Job> Editjob(NewJobInputDto newJobInputDto);
+        Task<Job> Editjob(EditJobInputDto editJobInputDto);
 
         /// <summary>
         /// Elimina los datos de un job
         /// </summary>
         /// <param name="idJob"></param>
-        void DeleteJob(Guid idJob);
+        Task DeleteJob(Guid idJob);
+
+        /// <summary>
+        /// Obtengo un listado de  trabajo
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Job>> GetListadoAsync();
     }
 }
