@@ -154,37 +154,24 @@
                 e.preventDefault();
                 var $this = $(this);
                 var codigo = $this.data("codigo");
+                var filtros = $("#frm-filtros").serialize();
+                Bitworks.Ventanas.mostrarLoading();
+                $.ajax({
+                    url: $this.attr('href'),
+                    type: 'POST',
+                    data: "idJob=" + codigo + "&" + filtros,
+                    success: function (result) {
+                        if (result.existoso) {
+                            $("#ListadoJobs").html('');
+                            $("#ListadoJobs").html(result.html);
+                            swal("Exito", "Job eliminado correctamente", "success");
 
-                swal({
-                    title: "¿Desea eliminar el job?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "si, eliminarlo",
-                    cancelButtonText: "No",
-                    closeOnConfirm: false,
-                    closeOnCancel: true
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        Bitworks.Ventanas.mostrarLoading();
-                        $.ajax({
-                            url: $this.attr('href'),
-                            type: 'POST',
-                            data: $("#frm-filtros").serialize() + "&idJob=" + codigo,
-                            success: function (result) {
-                                if (result.existoso) {
-                                    $("#ListadoJobs").html('');
-                                    $("#ListadoJobs").html(result.html);
-                                    swal("Exito", "Job eliminado correctamente", "success");
-
-                                } else {
-                                    swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
-                                }
-                            },
-                            error: function (error) {
-                                swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
-                            }
-                        });
+                        } else {
+                            swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
+                        }
+                    },
+                    error: function (error) {
+                        swal("Error", "Error al intentar hacer la peticion recarge la pagina y vuelva a intentarlo", "error");
                     }
                 });
 
