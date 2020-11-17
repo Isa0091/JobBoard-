@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Folder Include="DTO\Job\Output\" />
     <Folder Include="Exception\" />
-    <Folder Include="Data\" />
-    <Folder Include="DTO\" />
-    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>
